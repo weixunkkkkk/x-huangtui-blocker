@@ -1,7 +1,23 @@
+# macOS
 .DS_Store
+
+# Editor
 *.swp
 *.swo
 *~
-instructions.md
+.vscode/
+.idea/
+
+# Build / Release artifacts
+*.zip
+*.crx
+*.pem
+
+# Project specific
 store/
+.spec-workflow/
+instructions.md
 .playwright-mcp/
+
+# Node (if ever added)
+node_modules/

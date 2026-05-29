@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "X Focus Filter",
-  "version": "1.5.1",
-  "description": "Filter X/Twitter timeline to only show Tech, AI, Business & Open Source content",
+  "name": "X 黄推屏蔽器 - Huangtui Blocker",
+  "version": "0.1.0",
+  "description": "专为中文用户设计的 X（Twitter）黄推屏蔽器。基于 X Focus Filter 二次开发，内置强大中文黄推关键词库，彻底过滤福利推广、车牌、裸聊等内容。",
   "permissions": ["storage"],
   "host_permissions": ["https://x.com/*", "https://twitter.com/*", "https://video.twimg.com/*", "https://pbs.twimg.com/*"],
   "content_scripts": [

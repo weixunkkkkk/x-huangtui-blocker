@@ -1,120 +1,60 @@
-# X Focus Filter
+# X 黄推屏蔽器 / X Huangtui Blocker
 
-[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/gcgccfdjkeaakmfahollcpmpfpijeack?label=Chrome%20Web%20Store&logo=googlechrome&logoColor=white&color=b07028)](https://chromewebstore.google.com/detail/x-focus-filter/gcgccfdjkeaakmfahollcpmpfpijeack)
+一个专注于屏蔽 X（Twitter）上中文黄推、福利推广、NSFW 内容的 Chrome 扩展。
 
-**[Install from Chrome Web Store](https://chromewebstore.google.com/detail/x-focus-filter/gcgccfdjkeaakmfahollcpmpfpijeack)**
+本项目基于 [X Focus Filter](https://github.com/vorojar/x-focus-filter) 进行二次开发，针对中文用户常见的「黄推」场景进行了深度优化。
 
-**A Chrome extension that filters your X (Twitter) timeline to only show content you actually care about.**
+## 特点
 
-Tired of scrolling through spam, NSFW content, crypto scams, and engagement bait on X? X Focus Filter uses local keyword matching to hide irrelevant tweets and surface only the topics that matter to you — Tech, AI, Business, Open Source, and more.
+- **强力中文黄推过滤**：内置大量中文黄推关键词（福利姬、车牌、裸聊推广、同城可约、OnlyFans 等）
+- **本地运行，隐私安全**：所有过滤都在浏览器本地完成，无任何数据上传
+- **完全隐藏**：匹配到的黄推内容直接消失（可通过设置调整）
+- **支持自定义**：可自由添加/删除关键词，支持账号白名单
+- **基于成熟项目**：继承了 X Focus Filter 优秀的 MutationObserver 架构和 UI
 
-No API keys. No data collection. No server. Everything runs locally in your browser.
+## 安装方法
 
-<img src="./screenshots/popup.png" width="340" alt="X Focus Filter popup interface" />
+### 开发者模式加载（推荐）
 
-## The Problem
+1. 下载本仓库代码（或直接下载 Release 中的 zip 解压）
+2. 打开 Chrome / Edge 扩展管理页面：
+   - Chrome: `chrome://extensions/`
+   - Edge: `edge://extensions/`
+3. 开启右上角「开发者模式」
+4. 点击「加载已解压的扩展程序」
+5. 选择本项目文件夹
+6. 固定扩展图标到工具栏
 
-X's timeline is full of noise:
-- Spam and NSFW/adult content mixed into your feed
-- Crypto scam promotions and fake giveaways
-- Engagement bait and rage-inducing culture war posts
-- Content completely unrelated to your professional interests
+安装后访问 [x.com](https://x.com) 即可使用。
 
-The algorithmic timeline doesn't respect your time. **X Focus Filter gives you control back.**
+## 使用建议
 
-## How It Works
+1. 安装后先去扩展的 **设置页**（点击 popup → 管理关键词与白名单）查看和补充关键词。
+2. 可以把你经常看到的黄推话术补充进去，效果会更好。
+3. 如果有想保留的账号（即使发黄推也想看），可以加入白名单。
 
-The extension scans each tweet as it loads and matches it against curated keyword dictionaries. Tweets that don't match your selected topics are smoothly hidden. No page reloads, no delays — it works in real-time as you scroll.
+## 与原项目关系
 
-```
-Tweet loads → Keyword matching → Show or Hide
-```
+本项目是 [vorojar/x-focus-filter](https://github.com/vorojar/x-focus-filter) 的定制分支，主要变化：
 
-- **Whitelist mode**: Only tweets matching your selected topics are shown
-- **Blacklist**: Known spam/NSFW patterns are always filtered out
-- **Custom keywords**: Add your own whitelist/blacklist terms
-- **User whitelist**: Specific accounts always show through
+- 大幅扩充中文黄推黑名单（核心改进）
+- 默认行为调整为更激进的黄推过滤
+- 中文界面和说明优化
 
-## Features
+原项目更适合想专注刷科技/AI 内容的用户，本项目更适合想干净刷 X、不想看到黄推的用户。
 
-- **8 Topic Categories** — Toggle on/off with one click:
-  - 💻 Tech — Software, hardware, cloud, programming languages
-  - 🤖 AI/ML — LLMs, deep learning, agents, image generation
-  - 📈 Business — Startups, funding, markets, fintech
-  - 🔓 Open Source — GitHub, releases, package managers
-  - 🎨 Design — UI/UX, Figma, design systems, accessibility
-  - 🪙 Crypto — Blockchain, DeFi, Web3, smart contracts
-  - 🚀 Indie Dev — Side projects, bootstrapping, build in public
-  - 💼 Career — Hiring, remote work, interviews, freelance
+## 贡献
 
-- **3 Filter Modes**:
-  - 🔒 **Strict** — Requires 2+ keyword matches (very precise)
-  - 🎯 **Normal** — Single keyword match (balanced)
-  - 🌊 **Relaxed** — Includes broader related terms (more content)
+欢迎提交 PR 补充更多高质量中文黄推关键词！
 
-- **Peek Mode** — Temporarily reveal filtered tweets at low opacity to check for false positives
-
-- **Custom Keywords** — Add comma-separated terms to always show or always hide
-
-- **User Whitelist** — Ensure specific accounts are never filtered
-
-- **Bilingual** — Full English and Chinese (中文) UI support
-
-- **Real-time Stats** — See how many tweets were scanned, shown, and hidden
-
-- **Floating Badge** — Unobtrusive on-page indicator with quick toggle
-
-## Installation
-
-### From Source (Developer Mode)
-
-1. Clone this repository:
-   ```bash
-   git clone https://github.com/vorojar/x-focus-filter.git
-   ```
-
-2. Open Chrome and navigate to `chrome://extensions/`
-
-3. Enable **Developer mode** (toggle in top-right corner)
-
-4. Click **Load unpacked** and select the cloned folder
-
-5. Navigate to [x.com](https://x.com) — the extension starts working automatically
-
-## How the Keyword Matching Works
-
-Each topic category contains a curated dictionary of keywords (50-100+ terms per category, in both English and Chinese). When a tweet loads:
-
-1. The tweet text, author name, and any card/link preview text are extracted
-2. The combined text is checked against the global blacklist (spam, NSFW, scams)
-3. If not blacklisted, it's matched against your active topic keywords
-4. In **Strict** mode, at least 2 keywords must match
-5. In **Relaxed** mode, additional broader terms are included
-
-Short keywords (≤3 chars like "AI", "API", "SDK") use word-boundary matching to avoid false positives.
-
-## Privacy
-
-- **Zero data collection** — No analytics, no tracking, no telemetry
-- **No network requests** — All filtering happens locally via keyword matching
-- **No API keys needed** — Works entirely offline after installation
-- **Minimal permissions** — Only requests access to x.com/twitter.com and local storage
-
-## Built With
-
-- Vanilla JavaScript (no frameworks, no build step)
-- Chrome Extension Manifest V3
-- MutationObserver for real-time DOM monitoring
-
-## Contributing
-
-Contributions are welcome! Some ideas:
-
-- Add new topic categories with keyword dictionaries
-- Improve keyword coverage for existing categories
-- Add support for other languages
-- Port to Firefox/Safari
+在 `content.js` 的 `BLACKLIST` 数组中添加即可，建议按类别整理并附上注释。
 
 ## License
 
-MIT
+本项目基于原项目 MIT 协议开源。
+
+---
+
+**如果这个扩展帮到你了，欢迎点个 Star 支持！**
+
+有问题或建议欢迎提 Issue。

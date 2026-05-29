@@ -16,7 +16,8 @@
     showBadge: true,
     filterAds: true,
     opacity: 0.0,
-    categories: { tech: true, ai: true, business: true, opensource: true, design: false, crypto: false, indie: false, career: false },
+    // 测试/黄推模式下推荐关闭正向过滤
+    categories: { tech: false, ai: false, business: false, opensource: false, design: false, crypto: false, indie: false, career: false },
     customCategories: [],
     customWhitelist: [],
     customBlacklist: [],
@@ -193,16 +194,65 @@
     career: ['work', 'team', 'role', 'opportunity', '工作', '团队', '机会'],
   };
 
+  // =====================================================================
+  // 强力黑名单（黄推 + 垃圾推广专用）
+  // =====================================================================
+  // 说明：
+  // - 这个黑名单会优先于所有白名单逻辑执行（看到就藏）
+  // - 已大幅扩充中文“黄推”相关词汇（福利推广、车牌、裸聊、平台等）
+  // - 短词使用词边界匹配以减少误杀
   const BLACKLIST = [
-    'onlyfans', 'nsfw', 'xxx', 'porn', 'hentai', 'nude', 'nudes',
+    // ---------- 英文常见 NSFW / 成人平台 ----------
+    'onlyfans', 'only fan', 'fansly', 'fanvue', 'patreon', 'manyvids',
+    'nsfw', 'xxx', 'porn', 'porno', 'hentai', 'nude', 'nudes',
     'naked', 'sexy', 'sex video', 'sex tape', 'adult content',
     'escort', 'cam girl', 'camgirl', 'sugar daddy', 'sugar baby',
     'hookup', 'hook up', 'fwb', 'lingerie', 'bikini', 'thong',
-    'hot girl', 'hot babe', 'slutty', 'horny',
-    'fanvue', 'fansly', 'manyvids',
+    'hot girl', 'hot babe', 'slutty', 'horny', 'thirst', 'thirsty',
+    'leak', 'leaked', 'leaks',
+
+    // ---------- 垃圾/诈骗推广 ----------
     'giveaway', 'airdrop', 'whitelist spot', 'free mint',
     'follow and retweet', 'follow + rt', 'like and retweet',
     'make money', 'passive income', 'forex signal', 'binary option',
+
+    // ========== 高危中文黄推推广话术（核心） ==========
+    '同城可约', '附近可约', '线下可约', '同城', '附近', '线下',
+    '约炮', '约吗', '约p', '约pao',
+    '上门', '全套', '包夜', '包天', '外卖', '资源',
+    '裸聊', '视频聊', '语音聊', '小飞机', '飞机杯',
+    '人妻', '少妇', '嫩模', '新茶', '学生妹', '空姐',
+    '寂寞', '空虚', '好色', '好涩', '骚货', '骚', 'sao',
+    '加我', '私信', 'v信', 'vx', '微信', '电报', 'tg',
+    '她的主页', '主页看我', '看我主页', '资料看我',
+    '不授课', '只卖身', '只卖不教',
+
+    // ========== 车牌 / 番号 / JAV 类 ==========
+    '车牌', '車牌', '车牌号', '番号', 'fc2', 'ppv',
+    '无码', '無码', '有码', '有碼', '無修正', '中文字幕',
+    'av', 'jav', 'hentai', '里番',
+
+    // ========== 福利 / 视觉类 ==========
+    '福利', '福利姬', '福利图', '福利视频', '福利资源',
+    '黄推', '黃推', '黄图', '黄片', '黄视频', '黄资源',
+    '色图', '色情', '色视频', '色资源',
+    'r18', '18+', '十八禁', '成人', '成人视频',
+    '露出', '偷拍', '换妻', '群p', '3p',
+
+    // ========== 其他常见变体与规避 ==========
+    'yello', 'ye llo', '黄', '黃',
+    '涩', 'se', '色', '色批',
+    '母狗', '肉便器', '奶子', '巨乳', '丝袜',
+    '萝莉', 'loli', '幼女',
+    '调教', 'sm', '重口', '重口味',
+    '炮友', '性伴侣', '一夜情',
+
+    // ========== 常见推广句式片段 ==========
+    '加电报', '加tg', '加vx', '加微信',
+    '私我', '私聊', '私信我', '来我主页',
+    '看我资料', '资料全', '全套服务',
+
+    // ---------- 上游原有中文垃圾词（保留） ----------
     '约炮', '色情', '裸体', '裸照', '成人', '情色', '小姐',
     '援交', '外围', '楼凤', '上门服务',
     '福利姬', '车牌', '番号', '磁力',
